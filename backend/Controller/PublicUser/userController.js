@@ -1,5 +1,5 @@
-const userModel = require("../Model/userModel");
 const bcrypt = require("bcrypt");
+const userModel = require("../../Model/PublicUser/userModel");
 
 require("dotenv").config();
 
@@ -43,7 +43,7 @@ exports.userRegistration = async (req, res) => {
       firstName: firstName,
       lastName: lastName,
       email: email.toLowerCase(),
-      Password: hashPassword,
+      password: hashPassword,
       contactNumber,
       participationType: participationType,
     });
@@ -59,4 +59,11 @@ exports.userRegistration = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+exports.userLogin = (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, password } = req.body;
+  } catch (error) {}
 };

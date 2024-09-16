@@ -9,6 +9,7 @@ const EventList = () => {
   const [searchLocation, setSearchLocation] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  //Using context
   const eventItems = useContext(EventContext);
   console.log("EventItems", eventItems);
 

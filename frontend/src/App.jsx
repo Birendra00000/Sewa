@@ -1,14 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import AboutUs from "./components/Aboutus";
+import AboutUs from "./Pages/Aboutus";
 import EventList from "./components/EventList";
 import EventSection from "./components/EventSection";
-import RegistrationPage from "./components/RegistrationPage";
+import RegistrationPage from "./Pages/RegistrationPage";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
 import CreateEvent from "./components/Createevent";
+import Login from "./Pages/Login";
+import Home from "./Pages/Home";
 const App = () => {
   return (
     <Router>
@@ -23,6 +24,7 @@ const App = () => {
         {/* Registration Form */}
         <Route path="/contactus" element={<ContactUs />} />{" "}
         <Route path="/createEvent" element={<CreateEvent />} />{" "}
+        <Route path="/login" element={<Login />} />{" "}
       </Routes>
       <Footer />
     </Router>

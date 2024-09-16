@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Gmail must be provided"],
   },
-  Password: {
+  password: {
     type: String,
     required: [true, "Password must be provided"],
   },

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import Login from "../Pages/Login";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -39,7 +40,14 @@ const Navbar = () => {
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
           CONTACT US
-        </Link>
+        </Link>{" "}
+        <Link
+          to="/register"
+          className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          REGISTER
+        </Link>{" "}
       </div>
       <div className="md:hidden">
         <button
@@ -85,6 +93,13 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact Us
+            </Link>
+            <Link
+              to="/register"
+              className="hover:text-gray-400 transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              REGISTER
             </Link>
           </div>
         </div>
