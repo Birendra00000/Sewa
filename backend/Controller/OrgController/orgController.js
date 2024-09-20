@@ -1,4 +1,7 @@
+const orgModel = require("../../Model/Organization/orgModel");
 const orgSchema = require("../../Model/Organization/orgModel");
+var jwt = require("jsonwebtoken");
+
 const bcrypt = require("bcrypt");
 
 exports.orgRegistartion = async (req, res) => {
@@ -61,5 +64,61 @@ exports.orgRegistartion = async (req, res) => {
       message: "Error creating Event",
       error: error.message,
     });
+  }
+};
+exports.orgLogin = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Pleased provide email and password",
+      });
+    }
+
+    const orgExist = await orgModel.findOne({ orgEmail: email.toLowerCase() });
+
+    if (!orgExist) {
+      return res.status(400).json({
+        message: "Org not found",
+      });
+    }
+    console.log("Org found all:", orgExist);
+
+    // Log theorg object to verify the password field exists
+    console.log("Org found:", orgExist?.orgPassword);
+
+    // Check if theorg has a password field
+    if (!orgExist.orgPassword) {
+      return res.status(500).json({
+        message: "Org account has no password stored",
+      });
+    }
+
+    const isPasswordvalid = await bcrypt.compare(
+      password,
+      orgExist.orgPassword
+    );
+    if (!isPasswordvalid) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    //For Generating token
+
+    const token = jwt.sign({ id: orgExist._id }, process.env.JWT_SECRET_ORG, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).json({
+      orgExist,
+      message: "Log In successfully",
+      token,
+    });
+  } catch (error) {
+    console.error(error); // Log the error
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

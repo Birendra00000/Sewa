@@ -34,6 +34,11 @@ const orgSchema = new Schema({
     type: String,
     default: "",
   },
+  // New field to track approval status
+  isApproved: {
+    type: Boolean,
+    default: false, // Default to false (pending approval)
+  },
 });
 
 module.exports = mongoose.model("orgSchema", orgSchema);
