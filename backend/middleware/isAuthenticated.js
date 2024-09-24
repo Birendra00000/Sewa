@@ -5,6 +5,7 @@ const promisify = require("util").promisify;
 const isAuthenticated = async (req, res, next) => {
   // Extract the token from the 'Authorization' header
   const authHeader = req.headers.authorization;
+  console.log("Request Headers:", authHeader);
   // Check if the token exists
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(403).json({
@@ -21,7 +22,7 @@ const isAuthenticated = async (req, res, next) => {
       token,
       process.env.JWT_SECRET // Make sure this matches the secret used for signing tokens
     );
-
+    con;
     // Find the user associated with the token
     const user = await userModel.findOne({ _id: decodeToken.id });
 

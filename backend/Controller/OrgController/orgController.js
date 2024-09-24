@@ -108,9 +108,13 @@ exports.orgLogin = async (req, res) => {
 
     //For Generating token
 
-    const token = jwt.sign({ id: orgExist._id }, process.env.JWT_SECRET_ORG, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: orgExist._id, role: orgExist.role },
+      process.env.JWT_SECRET_ORG,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     res.status(200).json({
       orgExist,

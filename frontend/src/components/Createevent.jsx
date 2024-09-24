@@ -22,7 +22,7 @@ const CreateEvent = () => {
   };
 
   const notifySuccess = () => toast.success("Event created successfully");
-  const notifyError = () => toast.error("Failed to create Event");
+  // const notifyError = () => toast.error("Failed to create Event");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -49,17 +49,17 @@ const CreateEvent = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${your_token_here}`,
           },
         }
       );
 
-      console.log("Event created successfully", response.data);
+      console.log("Event created successfully", response);
       notifySuccess();
 
       //Handle success (e.g., redirect to another page or show a success message)
     } catch (error) {
-      notifyError();
-
+      toast.error(error.response.data.message);
       // Handle error (e.g., show an error message)
     }
   };

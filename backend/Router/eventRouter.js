@@ -5,11 +5,16 @@ const {
   getSingleEvent,
   searchEvents,
 } = require("../Controller/eventController");
+const isAuthenticated = require("../middleware/isAuthenticated");
+const isOrganization = require("../middleware/isOrganization");
 const upload = require("../services/upload");
 
 const router = require("express").Router();
 
-router.route("/event").post(upload.single("image"), createEvent).get(getEvent);
+router
+  .route("/event")
+  .post(isAuthenticated, isOrganization, upload.single("image"), createEvent)
+  .get(getEvent);
 
 // Route for searching events
 router.route("/search").get(searchEvents);

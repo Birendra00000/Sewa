@@ -20,7 +20,8 @@ const App = () => {
         <Route path="/event" element={<EventList />} /> {/* List of Events */}
         <Route path="/event/:id" element={<EventSection />} />{" "}
         {/* Event Details Page */}
-        <Route path="/register" element={<RegistrationPage />} />{" "}
+        <Route path="/userregister" element={<RegistrationPage />} />{" "}
+        <Route path="/orgregister" element={<RegistrationPage />} />{" "}
         {/* Registration Form */}
         <Route path="/contactus" element={<ContactUs />} />{" "}
         <Route path="/createEvent" element={<CreateEvent />} />{" "}

@@ -5,6 +5,13 @@ import Login from "../Pages/Login";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoverRegister, sethoverRegister] = useState(false);
+
+  const setClassReg = () => {
+    return `absolute top-[7%] right-[1%] w-[200px] flex justify-center p-4  flex-col items-center bg-[#01aeee] text-white w-[200px] z-[4] text-base font-semibold border-white shadow-md ${
+      hoverRegister ? "" : "hidden"
+    }`;
+  };
 
   return (
     <div
@@ -16,10 +23,10 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="h-14 md:h-32" />
         </Link>
       </div>
-      <div className="hidden md:flex space-x-16">
+      <div className="hidden md:flex space-x-16 ">
         <Link
           to="/"
-          className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
+          className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white h-full"
         >
           HOME
         </Link>
@@ -41,14 +48,35 @@ const Navbar = () => {
         >
           CONTACT US
         </Link>{" "}
-        <Link
-          to="/register"
-          className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
-          onClick={() => setIsMobileMenuOpen(false)}
+        <div
+          className="relative"
+          onMouseEnter={() => sethoverRegister(true)}
+          onMouseLeave={() => sethoverRegister(false)}
+          onFocus={() => sethoverRegister(true)} // Opens the dropdown on keyboard focus
+          onBlur={() => sethoverRegister(false)} // Closes the dropdown when focus is
+          tabIndex={0}
         >
-          REGISTER
-        </Link>{" "}
-      </div>
+          <div
+            className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white "
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            REGISTER{" "}
+          </div>{" "}
+        </div>
+      </div>{" "}
+      <span
+        className={setClassReg()}
+        onMouseEnter={() => sethoverRegister(true)}
+        onMouseLeave={() => sethoverRegister(false)}
+      >
+        <Link to="/userregister" className="hover:underline ">
+          {" "}
+          User
+        </Link>
+        <Link to="/orgregister" className="hover:underline ">
+          Organization
+        </Link>
+      </span>
       <div className="md:hidden">
         <button
           className="text-2xl focus:outline-none text-white"
@@ -103,7 +131,7 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-      )}
+      )}{" "}
     </div>
   );
 };

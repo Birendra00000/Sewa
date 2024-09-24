@@ -22,6 +22,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password must be provided"],
   },
+  role: { type: String, default: "user" }, // Always set as organization
   participationType: {
     type: String,
     enum: ["volunteer", "attendee"],

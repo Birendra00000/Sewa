@@ -34,6 +34,7 @@ const orgSchema = new Schema({
     type: String,
     default: "",
   },
+  role: { type: String, default: "organization" }, // Always set as organization
   // New field to track approval status
   isApproved: {
     type: Boolean,
