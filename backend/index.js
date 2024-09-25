@@ -4,6 +4,10 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 
+//json parse
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Configure CORS to allow requests from specific origins
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -12,10 +16,6 @@ const corsOptions = {
 };
 // Apply CORS middleware
 app.use(cors(corsOptions));
-
-//json parse
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT;
 

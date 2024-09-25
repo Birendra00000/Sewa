@@ -13,7 +13,12 @@ const router = require("express").Router();
 
 router
   .route("/event")
-  .post(isAuthenticated, isOrganization, upload.single("image"), createEvent)
+  .post(
+    isAuthenticated,
+    isOrganization("organization"),
+    upload.single("image"),
+    createEvent
+  )
   .get(getEvent);
 
 // Route for searching events

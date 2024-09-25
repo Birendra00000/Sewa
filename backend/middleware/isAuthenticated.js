@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../Model/PublicUser/userModel");
+const orgModel = require("../Model/Organization/orgModel");
 const promisify = require("util").promisify;
 
 const isAuthenticated = async (req, res, next) => {
   // Extract the token from the 'Authorization' header
   const authHeader = req.headers.authorization;
   console.log("Request Headers:", authHeader);
+
   // Check if the token exists
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(403).json({
@@ -17,23 +19,32 @@ const isAuthenticated = async (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    // Verify the token
-    const decodeToken = await promisify(jwt.verify)(
-      token,
-      process.env.JWT_SECRET // Make sure this matches the secret used for signing tokens
-    );
-    con;
-    // Find the user associated with the token
-    const user = await userModel.findOne({ _id: decodeToken.id });
+    // Decode the token without verifying to extract the role or type
+    const decodedHeader = jwt.decode(token);
 
-    if (!user) {
+    // Determine which secret to use based on the role (user or organization)
+    const secret =
+      decodedHeader.role === "organization"
+        ? process.env.JWT_SECRET_ORG
+        : process.env.JWT_SECRET_USER;
+
+    // Verify the token with the appropriate secret
+    const decodedToken = await promisify(jwt.verify)(token, secret);
+
+    // Use the correct model based on the role
+    const userOrOrg =
+      decodedHeader.role === "organization"
+        ? await orgModel.findOne({ _id: decodedToken.id })
+        : await userModel.findOne({ _id: decodedToken.id });
+
+    if (!userOrOrg) {
       return res.status(404).json({
-        message: "User does not exist with this token",
+        message: "User or Organization does not exist with this token",
       });
     }
 
-    // Attach the user to the request object
-    req.user = user;
+    // Attach the user/organization to the request object
+    req.userOrOrg = userOrOrg;
     next();
   } catch (error) {
     return res.status(400).json({
