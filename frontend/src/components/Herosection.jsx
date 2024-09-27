@@ -1,8 +1,8 @@
 import React from "react";
-import img1 from "../assets/Ellipse 5.png";
-import img2 from "../assets/Ellipse 6.png";
-import img3 from "../assets/Ellipse 9.png";
-import img4 from "../assets/Group 20.png";
+import img1 from "/assets/Ellipse 5.png";
+import img2 from "/assets/Ellipse 6.png";
+import img3 from "/assets/Ellipse 9.png";
+import img4 from "/assets/Group 20.png";
 
 const Herosection = () => {
   return (

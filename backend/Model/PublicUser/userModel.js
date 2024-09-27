@@ -22,12 +22,17 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password must be provided"],
   },
-  role: { type: String, default: "user" }, // Always set as organization
-  participationType: {
+
+  skill: {
     type: String,
-    enum: ["volunteer", "attendee"],
-    default: ["volunteer"],
-    required: false, // Optional: Add if you want the field to be mandatory
+    enum: ["Hospitals", "Orphanages", "Schools", "Community Services"],
+    default: ["Community Services"],
   },
+  address: {
+    type: String,
+    required: [true, "Addresss must be provided"],
+  },
+
+  role: { type: String, default: "user" }, // Always set as organization
 });
 module.exports = mongoose.model("userSchema", userSchema);

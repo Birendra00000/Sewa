@@ -4,12 +4,12 @@ import Navbar from "./components/Navbar";
 import AboutUs from "./Pages/Aboutus";
 import EventList from "./components/EventList";
 import EventSection from "./components/EventSection";
-import RegistrationPage from "./Pages/RegistrationPage";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
 import CreateEvent from "./components/Createevent";
-import Login from "./Pages/Login";
 import Home from "./Pages/Home";
+import UserRegistration from "./Pages/User/UserRegistration";
+import OrgRegistration from "./Pages/Organization/orgRegistration";
 const App = () => {
   return (
     <Router>
@@ -20,12 +20,11 @@ const App = () => {
         <Route path="/event" element={<EventList />} /> {/* List of Events */}
         <Route path="/event/:id" element={<EventSection />} />{" "}
         {/* Event Details Page */}
-        <Route path="/userregister" element={<RegistrationPage />} />{" "}
-        <Route path="/orgregister" element={<RegistrationPage />} />{" "}
+        <Route path="/userregister" element={<UserRegistration />} />{" "}
+        <Route path="/orgregister" element={<OrgRegistration />} />{" "}
         {/* Registration Form */}
         <Route path="/contactus" element={<ContactUs />} />{" "}
         <Route path="/createEvent" element={<CreateEvent />} />{" "}
-        <Route path="/login" element={<Login />} />{" "}
       </Routes>
       <Footer />
     </Router>

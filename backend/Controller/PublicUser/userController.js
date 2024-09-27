@@ -12,7 +12,8 @@ exports.userRegistration = async (req, res) => {
       contactNumber,
       email,
       password,
-      participationType,
+      skill,
+      address,
     } = req.body;
     console.log(req.body);
     if (
@@ -21,7 +22,8 @@ exports.userRegistration = async (req, res) => {
       !email ||
       !password ||
       !contactNumber ||
-      !participationType
+      !skill ||
+      !address
     ) {
       return res.status(400).json({
         message: "Pleased fill out the form",
@@ -46,7 +48,8 @@ exports.userRegistration = async (req, res) => {
       email: email.toLowerCase(),
       password: hashPassword,
       contactNumber,
-      participationType: participationType,
+      skill: skill,
+      address,
     });
 
     res.status(200).json({

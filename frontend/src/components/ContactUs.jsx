@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import backgroundImage from "../assets/bgimg.jpg"; // Adjust the path as needed
+import backgroundImage from "/assets/bgimg.jpg"; // Adjust the path as needed
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({

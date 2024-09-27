@@ -32,6 +32,8 @@ const orgSchema = new Schema({
   },
   orgImage: {
     type: String,
+    required: [true, "Organization Image must be provided"],
+
     default: "",
   },
   role: { type: String, default: "organization" }, // Always set as organization

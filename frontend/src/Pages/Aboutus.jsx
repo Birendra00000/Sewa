@@ -1,10 +1,10 @@
 import React from "react";
-import img1 from "../assets/Ellipse 11.png";
-import ourmission from "../assets/ourmission.jpg";
-import img2 from "../assets/Ellipse 6.png";
-import img3 from "../assets/ellipse 9.png";
-import img4 from "../assets/Ellipse 5.png";
-import our from "../assets/our.jpg";
+import img1 from "/assets/Ellipse 11.png";
+import ourmission from "/assets/ourmission.jpg";
+import img2 from "/assets/Ellipse 6.png";
+import img3 from "/assets/Ellipse 9.png";
+import img4 from "/assets/Ellipse 5.png";
+import our from "/assets/our.jpg";
 
 const AboutUs = () => {
   return (
