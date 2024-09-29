@@ -18,8 +18,10 @@ const OrgRegistration = () => {
   });
 
   const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   console.log("formdata", formData);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -28,7 +30,17 @@ const OrgRegistration = () => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    // Use FileReader to generate a preview of the image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result); // Set the preview URL to the result of FileReader
+    };
+
+    if (selectedFile) {
+      reader.readAsDataURL(selectedFile); // Read the file as a data URL
+    }
   };
   // console.log(handleFileChange);
 
@@ -63,7 +75,9 @@ const OrgRegistration = () => {
         }
       );
       // console.log("Event created successfully", response);
-      notifySuccess();
+      if (response.status === 200) {
+        notifySuccess();
+      }
 
       // console.log(JSON.stringify(response.data.data));
       // console.log("response", response.data.user);
@@ -214,6 +228,14 @@ const OrgRegistration = () => {
                     Browser
                   </div>
                 </label>
+                {/* Preview of the uploaded image */}
+                {previewUrl && (
+                  <img
+                    src={previewUrl}
+                    alt="Image Preview"
+                    className=" w-[150px] h-[140px] object-cover rounded-md ml-[10%]"
+                  />
+                )}{" "}
               </span>
             </div>
             {/* Organization description */}{" "}
