@@ -5,29 +5,30 @@ import { addToCookie } from "../../utils/StorageFun";
 import { API, JWT_TOKEN } from "../../api/index";
 
 import * as ACTION_TYPES from "./type";
-let token, account_type, username, fullname;
+let token, account_type, lastName, firstName;
 if (typeof window !== "undefined") {
-  // userData = localStorage.getItem("AuthUser")
-  //   ? JSON.parse(localStorage.getItem("AuthUser"))
-  //   : "";
-  fullname = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).fullname
+  const userData = localStorage.getItem("AuthUser")
+    ? JSON.parse(localStorage.getItem("AuthUser"))
     : "";
-  username = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).username
+  console.log("userData", userData);
+  firstName = localStorage.getItem("AuthUser")
+    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.firstName
+    : "";
+  lastName = localStorage.getItem("AuthUser")
+    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.lastName
     : "";
   token = localStorage.getItem("AuthUser")
     ? JSON.parse(localStorage.getItem("AuthUser")).token
     : "";
   account_type = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).account_type
+    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.role
     : "";
 }
 export const initialState = {
   isAuth: token ? true : false,
   token: "" || token,
-  username: "" || username,
-  fullname: "" || fullname,
+  lastName: "" || lastName,
+  firstName: "" || firstName,
   account_type: "" || account_type,
   loading: false,
 };
@@ -53,8 +54,8 @@ export const AuthReducer = (state = initialState, action) => {
         ...state,
         isAuth: true,
         account_type: action.payload.account_type,
-        username: action.payload.username,
-        fullname: action.payload.fullname,
+        lastName: action.payload.lastName,
+        firstName: action.payload.firstName,
         token: action.payload.token,
       };
 
@@ -64,8 +65,8 @@ export const AuthReducer = (state = initialState, action) => {
         ...state,
         isAuth: false,
         account_type: "",
-        username: "",
-        fullname: "",
+        lastName: "",
+        firstName: "",
         token: "",
       };
     default:

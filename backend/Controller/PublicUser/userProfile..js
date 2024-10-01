@@ -1,7 +1,8 @@
 const userModel = require("../../Model/PublicUser/userModel");
 
 exports.userProfile = async (req, res) => {
-    const userId = req.userOrOrg._id; // Get userId from the authenticated user  try {
+  const userId = req.userOrOrg._id; // Get userId from the authenticated user  try {
+  try {
     if (userId) {
       return res.status(400).json({
         message: "Userid is not defined",

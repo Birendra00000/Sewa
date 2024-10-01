@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, useReducer } from "react";
 import * as Reducer from "./reducer";
-import { AuthAPI } from "../../api";
+import { AuthAPI, JWT_TOKEN } from "../../api";
 import { getfromCookie } from "../../utils/StorageFun";
 
 export const AuthContext = createContext("");
@@ -12,42 +12,31 @@ const AuthProvider = ({ children }) => {
   );
 
   const [userData, setUserData] = useState({});
-  const [userId, setUserId] = useState({});
-  const [refetch, setRefetch] = useState(true);
+  const [refetch, setRefetch] = useState(false); // Changed to false initially
 
-  // useEffect(async () => {
-  //   if (authState.isAuth) {
-  //     await getUserData();
-  //     await getUserId();
-  //   }
-  // }, [refetch]);
+  console.log("AUTHCONTEXT", userData);
 
   useEffect(() => {
     const fetchData = async () => {
       if (authState.isAuth) {
         await getUserData();
-        await getUserId();
       }
     };
+
     fetchData();
   }, [refetch, authState.isAuth]);
 
   const getUserData = async () => {
     try {
-      const res = await AuthAPI.get("/getprofile");
+      const token = getfromCookie(JWT_TOKEN); // Use getFromCookie to get the token
+      const res = await AuthAPI.get("/getprofile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUserData(res.data);
-      // console.log(res.data)
     } catch (err) {
-      console.log(err);
-    }
-  };
-  const getUserId = async () => {
-    try {
-      const res = await AuthAPI.get("/getprofile");
-      setUserId(res.data);
-      // console.log(res.data)
-    } catch (err) {
-      console.log(err);
+      console.log("Error fetching user data:", err);
     }
   };
 
@@ -56,7 +45,6 @@ const AuthProvider = ({ children }) => {
       value={{
         authState,
         userData,
-        userId,
         authDispatch,
         setRefetch,
         refetch,

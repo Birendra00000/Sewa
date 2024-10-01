@@ -32,7 +32,7 @@ const UserLogin = () => {
         formData
       );
       const { data } = response;
-      console.log("data", data);
+      console.log("data", response);
       authDispatch({
         type: "LOGIN",
         payload: data,

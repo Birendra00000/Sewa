@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/BaseUrl";
+import { getfromCookie } from "../utils/StorageFun";
 
 export const JWT_TOKEN = "user_data_token";
 
@@ -22,7 +23,7 @@ const AuthAPI = axios.create({
 // * axios intercepting changes in storage
 AuthAPI.interceptors.request.use(
   (config) => {
-    const authToken = getFromCookie(JWT_TOKEN);
+    const authToken = getfromCookie(JWT_TOKEN);
     const token = authToken;
     if (token) {
       config.headers.Authorization = token;

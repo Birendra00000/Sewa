@@ -75,7 +75,7 @@ exports.userLogin = async (req, res) => {
         message: "Pleased provide email and password",
       });
     }
-
+    // Find the user by email, but exclude the password field
     const userExist = await userModel.findOne({ email: email.toLowerCase() });
 
     if (!userExist) {
@@ -102,6 +102,9 @@ exports.userLogin = async (req, res) => {
       });
     }
 
+    // Exclude the password from the user object before sending the response
+    const { password: _, ...userWithoutPassword } = userExist._doc;
+
     //For Generating token
 
     const token = jwt.sign(
@@ -115,6 +118,7 @@ exports.userLogin = async (req, res) => {
     res.status(200).json({
       message: "Log In successfully",
       token,
+      userWithoutPassword,
     });
   } catch (error) {
     console.error(error); // Log the error
