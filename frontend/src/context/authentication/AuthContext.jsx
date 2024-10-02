@@ -10,11 +10,11 @@ const AuthProvider = ({ children }) => {
     Reducer.AuthReducer,
     Reducer.initialState
   );
-
+  console.log("authState1111", authState);
   const [userData, setUserData] = useState({});
   const [refetch, setRefetch] = useState(false); // Changed to false initially
 
-  console.log("AUTHCONTEXT", userData);
+  // console.log("AUTHCONTEXT", userData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
         },
       });
       setUserData(res.data);
+      setRefetch(false); // Reset refetch to false after fetching data
     } catch (err) {
       console.log("Error fetching user data:", err);
     }

@@ -7,10 +7,10 @@ import { API, JWT_TOKEN } from "../../api/index";
 import * as ACTION_TYPES from "./type";
 let token, account_type, lastName, firstName;
 if (typeof window !== "undefined") {
-  const userData = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser"))
-    : "";
-  console.log("userData", userData);
+  // const userData = localStorage.getItem("AuthUser")
+  //   ? JSON.parse(localStorage.getItem("AuthUser"))
+  //   : "";
+  // console.log("userData", userData);
   firstName = localStorage.getItem("AuthUser")
     ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.firstName
     : "";

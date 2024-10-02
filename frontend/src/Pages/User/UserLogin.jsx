@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserLogin = () => {
   const navigate = useNavigate();
-  const { authDispatch } = useContext(AuthContext);
+  const { authDispatch, setRefetch } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,6 +21,8 @@ const UserLogin = () => {
     });
   };
 
+  const refreshPage = () => {};
+
   const notifySuccess = () => toast.success("Login successfully");
   const notifyError = () => toast.error("Failed to Register");
 
@@ -32,13 +34,24 @@ const UserLogin = () => {
         formData
       );
       const { data } = response;
-      console.log("data", response);
+      // console.log("data", response);
       authDispatch({
         type: "LOGIN",
-        payload: data,
+        payload: {
+          ...data,
+        },
       });
-      return navigate("/userdashboard");
+      console.log("JSON", JSON.stringify(authDispatch));
+      setRefetch(true); // Set refetch to true to trigger data fetching in AuthProvider
+      // window.location.reload(); // Reloads the entire page
+      navigate("/userdashboard");
+      window.location.reload();
 
+      // Reset form data
+      setFormData({
+        email: "",
+        password: "",
+      });
       //   console.log("response", response);
 
       //   notifySuccess();

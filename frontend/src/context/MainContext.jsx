@@ -12,7 +12,7 @@ const MainContext = (props) => {
       const response = await axios.get("http://localhost:4000/api/event");
       // console.log(response.data.message); // "Successfully fetched all event"
       // console.log(response.data.getAllEvent);
-      console.log(JSON.stringify(response.data.getAllEvent));
+      // console.log(JSON.stringify(response.data.getAllEvent));
       setEventData(response.data.getAllEvent);
       setLoading(false);
     } catch (error) {

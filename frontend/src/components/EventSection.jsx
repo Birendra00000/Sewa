@@ -15,7 +15,7 @@ const EventSection = () => {
     ? new Date(eventData.deadlineDate)
     : null;
 
-  console.log("eventData", eventData);
+  // console.log("eventData", eventData);
   const fetchEvent = async () => {
     setLoading(true);
     try {
