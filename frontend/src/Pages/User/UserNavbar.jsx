@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "/assets/logo.png";
+import { IoIosNotifications } from "react-icons/io";
 
-const Navbar = () => {
+const UserNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoverRegister, sethoverRegister] = useState(false);
 
   const setClassReg = () => {
-    return `absolute top-[7%] right-[1%] w-[200px] flex justify-center p-4  flex-col items-center bg-[#01aeee] text-white w-[200px] z-[4] text-base font-semibold border-white shadow-md tran ${
+    return `absolute top-[7%] right-[1%] w-[200px] flex justify-center p-4  flex-col items-center bg-[#01aeee] text-white w-[200px] z-[4] text-base font-semibold border-white shadow-md ${
       hoverRegister ? "" : "hidden"
     }`;
   };
@@ -27,13 +28,13 @@ const Navbar = () => {
           to="/"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white h-full"
         >
-          HOME
+          Dashboard
         </Link>
         <Link
           to="/aboutus"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
-          ABOUT US
+          My Events
         </Link>
         <Link
           to="/event"
@@ -45,7 +46,7 @@ const Navbar = () => {
           to="/contactus"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
-          CONTACT US
+          <IoIosNotifications />{" "}
         </Link>{" "}
         <div
           className="relative"
@@ -59,7 +60,7 @@ const Navbar = () => {
             className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white "
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            REGISTER{" "}
+            Logout{" "}
           </div>{" "}
         </div>
       </div>{" "}
@@ -68,7 +69,7 @@ const Navbar = () => {
         onMouseEnter={() => sethoverRegister(true)}
         onMouseLeave={() => sethoverRegister(false)}
       >
-        <Link to="/user/register" className="hover:underline ">
+        <Link to="/userregister" className="hover:underline ">
           {" "}
           User
         </Link>
@@ -135,4 +136,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default UserNavbar;

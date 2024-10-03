@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AboutUs from "./Pages/Aboutus";
@@ -8,14 +8,16 @@ import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
 import CreateEvent from "./components/Createevent";
 import Home from "./Pages/Home";
-import UserRegistration from "./Pages/User/UserRegistration";
 import OrgRegistration from "./Pages/Organization/orgRegistration";
-import UserLogin from "./Pages/User/UserLogin";
-import DashBoard from "./Pages/User/DashBoard.jsx/DashBoard";
+import UserRoutes from "./Pages/User/Routes/UserRoutes";
+import UserNavbar from "./components/UserComponents/UserNavbar";
+import { AuthContext } from "./context/authentication/AuthContext";
 const App = () => {
+  const { authState } = useContext(AuthContext);
+  console.log("authState", authState.isAuth);
   return (
     <Router>
-      <Navbar />
+      {authState.isAuth ? <UserNavbar /> : <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} /> {/* Home Route */}
         <Route path="/aboutus" element={<AboutUs />} /> {/* About Us Page */}
@@ -23,10 +25,8 @@ const App = () => {
         <Route path="/event/:id" element={<EventSection />} />{" "}
         {/* Event Details Page */}
         {/* FOR USER ONLY */}
-        <Route path="/userregister" element={<UserRegistration />} />{" "}
-        <Route path="/userlogin" element={<UserLogin />} />{" "}
-        <Route path="/userdashboard" element={<DashBoard />} />{" "}
-        {/* FOR ORGANIZATION ONLY */}
+        <Route path="/*" element={<UserRoutes />} />{" "}
+        {/* All user-related routes */} {/* FOR ORGANIZATION ONLY */}
         <Route path="/orgregister" element={<OrgRegistration />} />{" "}
         {/* Registration Form */}
         <Route path="/contactus" element={<ContactUs />} />{" "}

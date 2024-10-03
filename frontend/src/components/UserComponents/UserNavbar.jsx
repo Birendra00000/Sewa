@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "/assets/logo.png";
+import { IoIosNotifications } from "react-icons/io";
 
-const Navbar = () => {
+const UserNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoverRegister, sethoverRegister] = useState(false);
 
   const setClassReg = () => {
-    return `absolute top-[7%] right-[1%] w-[200px] flex justify-center p-4  flex-col items-center bg-[#01aeee] text-white w-[200px] z-[4] text-base font-semibold border-white shadow-md tran ${
+    return `absolute top-[7%] right-[1%] w-[200px] flex justify-center p-4  flex-col items-center bg-[#01aeee] text-white w-[200px] z-[4] text-base font-semibold border-white shadow-md ${
       hoverRegister ? "" : "hidden"
     }`;
   };
@@ -27,55 +28,35 @@ const Navbar = () => {
           to="/"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white h-full"
         >
-          HOME
+          DASHBOARD
         </Link>
         <Link
           to="/aboutus"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
-          ABOUT US
+          MY EVENTS{" "}
         </Link>
         <Link
-          to="/event"
+          to="/"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
           EVENT LIST
         </Link>
         <Link
-          to="/contactus"
+          to="/"
           className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white"
         >
-          CONTACT US
+          <IoIosNotifications size={30} />{" "}
         </Link>{" "}
-        <div
-          className="relative"
-          onMouseEnter={() => sethoverRegister(true)}
-          onMouseLeave={() => sethoverRegister(false)}
-          onFocus={() => sethoverRegister(true)} // Opens the dropdown on keyboard focus
-          onBlur={() => sethoverRegister(false)} // Closes the dropdown when focus is
-          tabIndex={0}
-        >
+        <div className="">
           <div
             className="hover:bg-[white] hover:text-blue-500 transition-colors  px-2  rounded-full text-base font-semibold text-white "
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            REGISTER{" "}
+            LOGOUT{" "}
           </div>{" "}
         </div>
       </div>{" "}
-      <span
-        className={setClassReg()}
-        onMouseEnter={() => sethoverRegister(true)}
-        onMouseLeave={() => sethoverRegister(false)}
-      >
-        <Link to="/user/register" className="hover:underline ">
-          {" "}
-          User
-        </Link>
-        <Link to="/orgregister" className="hover:underline ">
-          Organization
-        </Link>
-      </span>
       <div className="md:hidden">
         <button
           className="text-2xl focus:outline-none text-white"
@@ -135,4 +116,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default UserNavbar;
