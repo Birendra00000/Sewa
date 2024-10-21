@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/contactus" element={<ContactUs />} />{" "}
         <Route path="/createEvent" element={<CreateEvent />} />{" "}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 };

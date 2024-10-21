@@ -103,7 +103,7 @@ exports.userLogin = async (req, res) => {
     }
 
     // Exclude the password from the user object before sending the response
-    const { password: _, ...userWithoutPassword } = userExist._doc;
+    // const { password: _, ...userWithoutPassword } = userExist._doc;
 
     //For Generating token
 
@@ -118,7 +118,12 @@ exports.userLogin = async (req, res) => {
     res.status(200).json({
       message: "Log In successfully",
       token,
-      userWithoutPassword,
+      userData: {
+        firstName: userExist.firstName,
+        lastName: userExist.lastName,
+        email: userExist.email,
+        role: userExist.role,
+      },
     });
   } catch (error) {
     console.error(error); // Log the error

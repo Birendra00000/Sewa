@@ -1,7 +1,6 @@
-import React, { useReducer } from "react";
 // import { API, JWT_TOKEN } from "../../api";
 // import { addToCookie } from "../../utils/storageFunc";
-import { addToCookie } from "../../utils/StorageFun";
+import { addToCookie, removefromCookie } from "../../utils/StorageFun";
 import { API, JWT_TOKEN } from "../../api/index";
 
 import * as ACTION_TYPES from "./type";
@@ -12,16 +11,16 @@ if (typeof window !== "undefined") {
   //   : "";
   // console.log("userData", userData);
   firstName = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.firstName
+    ? JSON.parse(localStorage.getItem("AuthUser"))?.firstName
     : "";
   lastName = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.lastName
+    ? JSON.parse(localStorage.getItem("AuthUser"))?.lastName
     : "";
   token = localStorage.getItem("AuthUser")
     ? JSON.parse(localStorage.getItem("AuthUser")).token
     : "";
   account_type = localStorage.getItem("AuthUser")
-    ? JSON.parse(localStorage.getItem("AuthUser")).userWithoutPassword.role
+    ? JSON.parse(localStorage.getItem("AuthUser"))?.role
     : "";
 }
 export const initialState = {
@@ -60,7 +59,9 @@ export const AuthReducer = (state = initialState, action) => {
       };
 
     case ACTION_TYPES.LOGOUT:
-      localStorage.clear();
+      console.log("Executing LOGOUT action..."); // Ensure it's being hit      removefromCookie(JWT_TOKEN);
+      console.log("Clearing local storage...");
+      localStorage.removeItem("AuthUser");
       return {
         ...state,
         isAuth: false,
@@ -69,6 +70,7 @@ export const AuthReducer = (state = initialState, action) => {
         firstName: "",
         token: "",
       };
+
     default:
       return state;
   }

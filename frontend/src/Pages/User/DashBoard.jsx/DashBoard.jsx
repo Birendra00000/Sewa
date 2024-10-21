@@ -3,7 +3,7 @@ import { AuthContext } from "../../../context/authentication/AuthContext";
 
 const Dashboard = () => {
   const { authState } = useContext(AuthContext);
-  console.log("authState", authState);
+  console.log("authStatedashboard", authState);
   useEffect(() => {
     // Check if user is authenticated and has the required data
     // if (!authState.isAuth) {
@@ -17,7 +17,7 @@ const Dashboard = () => {
       {authState.isAuth ? (
         <div>
           <h1>
-            Welcome, {authState.firstName} {authState?.lastName}
+            Welcome, {authState?.firstName} {authState?.lastName}
           </h1>
           <p>Email: {authState?.email || "N/A"}</p>
           <p>Account Type: {authState?.account_type}</p>

@@ -34,18 +34,20 @@ const UserLogin = () => {
         formData
       );
       const { data } = response;
-      // console.log("data", response);
+      console.log("data", response);
+      const { token, userData } = data;
       authDispatch({
         type: "LOGIN",
         payload: {
-          ...data,
+          token,
+          ...userData,
         },
       });
-      console.log("JSON", JSON.stringify(authDispatch));
+      // console.log("JSON", JSON.stringify(authDispatch));
       setRefetch(true); // Set refetch to true to trigger data fetching in AuthProvider
       // window.location.reload(); // Reloads the entire page
       navigate("/user/dashboard");
-      window.location.reload();
+      // window.location.reload();
 
       // Reset form data
       setFormData({

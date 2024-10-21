@@ -10,10 +10,10 @@ const AuthProvider = ({ children }) => {
     Reducer.AuthReducer,
     Reducer.initialState
   );
+  // console.log("userData", authState);
   console.log("authState1111", authState);
   const [userData, setUserData] = useState({});
   const [refetch, setRefetch] = useState(false); // Changed to false initially
-
   // console.log("AUTHCONTEXT", userData);
 
   useEffect(() => {
