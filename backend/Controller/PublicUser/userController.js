@@ -31,7 +31,7 @@ exports.userRegistration = async (req, res) => {
     }
 
     const emailExist = await userModel.findOne({
-      userEmail: email.toLowerCase(),
+      email: email.toLowerCase(),
     });
 
     if (emailExist) {

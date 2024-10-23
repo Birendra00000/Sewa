@@ -6,7 +6,7 @@ const promisify = require("util").promisify;
 const isAuthenticated = async (req, res, next) => {
   // Extract the token from the 'Authorization' header
   const authHeader = req.headers.authorization;
-  console.log("Request Headers:", authHeader);
+  // console.log("Request Headers:", authHeader);
 
   // Check if the token exists
   if (!authHeader || !authHeader.startsWith("Bearer ")) {

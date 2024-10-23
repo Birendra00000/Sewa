@@ -10,7 +10,7 @@ import CreateEvent from "./components/Createevent";
 import Home from "./Pages/Home";
 import OrgRegistration from "./Pages/Organization/orgRegistration";
 import UserRoutes from "./Pages/User/Routes/UserRoutes";
-import UserNavbar from "./components/UserComponents/UserNavbar";
+
 import { AuthContext } from "./context/authentication/AuthContext";
 
 import UserLogin from "./Pages/User/UserLogin";

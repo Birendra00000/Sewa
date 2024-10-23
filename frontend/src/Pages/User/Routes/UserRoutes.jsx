@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import DashBoard from "../DashBoard.jsx/DashBoard";
 import SideBar from "../../../components/UserComponents/SideBar";
+import UserNavbar from "../../../components/UserComponents/UserNavbar";
 
 const UserLayout = ({ children }) => {
   return (
@@ -17,6 +18,7 @@ const UserLayout = ({ children }) => {
 const UserRoutes = () => {
   return (
     <UserLayout>
+      <UserNavbar />
       <Routes>
         {/* User Dashboard */}
         <Route path="/user/dashboard" element={<DashBoard />} />

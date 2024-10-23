@@ -59,7 +59,7 @@ const EventSection = () => {
         <div>{eventData?.eventDescription}</div>
         <div className="p-4">
           <Link
-            to="/register"
+            to="/user/register"
             className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg"
           >
             Register Now

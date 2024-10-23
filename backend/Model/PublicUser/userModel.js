@@ -26,7 +26,7 @@ const userSchema = new Schema({
   skill: {
     type: String,
     enum: ["Hospitals", "Orphanages", "Schools", "Community Services"],
-    default: ["Community Services"],
+    default: "Community Services",
   },
   address: {
     type: String,
@@ -34,5 +34,10 @@ const userSchema = new Schema({
   },
 
   role: { type: String, default: "user" }, // Always set as organization
+  registeredEvents: {
+    type: [mongoose.Schema.Types.ObjectId], // or String, depending on your design
+    ref: "eventSchema",
+    default: [], // Initialize it as an empty array
+  },
 });
 module.exports = mongoose.model("userSchema", userSchema);

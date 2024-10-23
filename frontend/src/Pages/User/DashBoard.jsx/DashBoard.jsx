@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/authentication/AuthContext";
+import DashBoardCard from "../../../components/UserComponents/dashboard/DashBoardCard";
 
 const Dashboard = () => {
   const { authState } = useContext(AuthContext);
@@ -13,19 +14,21 @@ const Dashboard = () => {
   }, [authState]);
 
   return (
-    <div>
-      {authState.isAuth ? (
+    <div className="flex justify-center w-full mt-[5%]">
+      <div className="w-11/12 justify-center ">
+        {authState?.isAuth ? (
+          <span className="text-xl font-semibold text-black">
+            Welcome,To Your DashBoard {authState?.firstName}{" "}
+            {authState?.lastName}
+          </span>
+        ) : (
+          <></>
+        )}
+
         <div>
-          <h1>
-            Welcome, {authState?.firstName} {authState?.lastName}
-          </h1>
-          <p>Email: {authState?.email || "N/A"}</p>
-          <p>Account Type: {authState?.account_type}</p>
-          {/* Add more user-related information as needed */}
+          <DashBoardCard />
         </div>
-      ) : (
-        <p>Please log in to view your dashboard.</p>
-      )}
+      </div>
     </div>
   );
 };
