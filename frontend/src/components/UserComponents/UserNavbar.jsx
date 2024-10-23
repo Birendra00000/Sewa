@@ -32,7 +32,7 @@ const UserNavbar = () => {
     md:px-20 px-3 "
     >
       <div className="flex items-center">
-        <Link to="/">
+        <Link to="/user/dashboard">
           <img src={logo} alt="logo" className="h-14 md:h-32" />
         </Link>
       </div>
