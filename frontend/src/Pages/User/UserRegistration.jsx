@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Link } from "react-router-dom";
 const UserRegistration = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -187,6 +187,12 @@ const UserRegistration = () => {
                 Submit Form
               </button>
             </div>
+            <span className="w-full flex  justify-center font-medium text-blue-500">
+              <p>Already have an account?</p>
+              <Link to="/user/login" className="underline  font-semibold">
+                Sign In
+              </Link>
+            </span>
           </form>
         </div>
         <ToastContainer />

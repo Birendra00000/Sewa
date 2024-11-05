@@ -4,7 +4,7 @@ import { addToCookie, removefromCookie } from "../../utils/StorageFun";
 import { API, JWT_TOKEN } from "../../api/index";
 
 import * as ACTION_TYPES from "./type";
-let token, account_type, lastName, firstName;
+let token, account_type, lastName, firstName, event_list;
 if (typeof window !== "undefined") {
   // const userData = localStorage.getItem("AuthUser")
   //   ? JSON.parse(localStorage.getItem("AuthUser"))
@@ -22,12 +22,16 @@ if (typeof window !== "undefined") {
   account_type = localStorage.getItem("AuthUser")
     ? JSON.parse(localStorage.getItem("AuthUser"))?.role
     : "";
+  event_list = localStorage.getItem("AuthUser")
+    ? JSON.parse(localStorage.getItem("AuthUser"))?.registeredEvents
+    : "";
 }
 export const initialState = {
   isAuth: token ? true : false,
   token: "" || token,
   lastName: "" || lastName,
   firstName: "" || firstName,
+  event_list: event_list || [], // Add event_list to the state
   account_type: "" || account_type,
   loading: false,
 };
@@ -52,9 +56,10 @@ export const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuth: true,
-        account_type: action.payload.account_type,
+        account_type: action.payload.role,
         lastName: action.payload.lastName,
         firstName: action.payload.firstName,
+        event_list: action.payload.registeredEvents || [], // Update event_list during login
         token: action.payload.token,
       };
 
@@ -68,6 +73,7 @@ export const AuthReducer = (state = initialState, action) => {
         account_type: "",
         lastName: "",
         firstName: "",
+        event_list: [], // Update event_list during login
         token: "",
       };
 

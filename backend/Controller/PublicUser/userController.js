@@ -76,8 +76,9 @@ exports.userLogin = async (req, res) => {
       });
     }
     // Find the user by email, but exclude the password field
-    const userExist = await userModel.findOne({ email: email.toLowerCase() });
-
+    const userExist = await userModel
+      .findOne({ email: email.toLowerCase() })
+      .populate("registeredEvents");
     if (!userExist) {
       return res.status(400).json({
         message: "User not found",
@@ -123,6 +124,7 @@ exports.userLogin = async (req, res) => {
         lastName: userExist.lastName,
         email: userExist.email,
         role: userExist.role,
+        registeredEvents: userExist.registeredEvents, // Include registered events
       },
     });
   } catch (error) {

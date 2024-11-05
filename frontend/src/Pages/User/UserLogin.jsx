@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { API } from "../../api";
 import { AuthContext } from "../../context/authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -20,8 +21,6 @@ const UserLogin = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const refreshPage = () => {};
 
   const notifySuccess = () => toast.success("Login successfully");
   const notifyError = () => toast.error("Failed to Register");
@@ -123,7 +122,13 @@ const UserLogin = () => {
               >
                 Submit Form
               </button>
-            </div>
+            </div>{" "}
+            <span className="w-full flex  justify-center font-medium text-blue-500">
+              <p>Already have an account?</p>
+              <Link to="/user/register" className="underline font-semibold">
+                Sign Up
+              </Link>
+            </span>
           </form>
         </div>
         <ToastContainer />

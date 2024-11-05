@@ -3,17 +3,25 @@ import { IoMdNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { FaBars } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
-const UserNavbar = () => {
+
+const UserNavbar = ({ enableLightMode, enableDarkMode, themeState }) => {
   const [openSideBar, setOpenSideBar] = useState(false);
 
   //   handleSetSideBar = () => {};
 
   return (
-    <div className="flex  items-center pt-8 w-full justify-center">
+    <div
+      className="flex  items-center pt-8 w-full justify-center"
+      style={{
+        backgroundColor: themeState.darkMode ? "#333" : "#fff",
+        color: themeState.darkMode ? "#fff" : "#000",
+        padding: "20px",
+      }}
+    >
       <div className="w-11/12 flex justify-between gap-x-6 items-center">
         <div className="relative flex items-center gap-5">
           <span className="cursor-pointer">
-            <FaBars size={20} />
+            <FaBars />{" "}
           </span>
           <input
             type="search"
@@ -28,7 +36,8 @@ const UserNavbar = () => {
           <IoMdNotifications size={28} />
 
           <span>
-            <MdOutlineWbSunny size={28} />
+            <MdOutlineWbSunny size={28} onClick={enableLightMode} />
+            <MdOutlineWbSunny size={28} onClick={enableDarkMode} />
           </span>
         </span>
       </div>

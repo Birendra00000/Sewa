@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AboutUs from "./Pages/Aboutus";
-import EventList from "./components/EventList";
+import EventList from "./components/TotalEventList";
 import EventSection from "./components/EventSection";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
@@ -15,6 +15,7 @@ import { AuthContext } from "./context/authentication/AuthContext";
 
 import UserLogin from "./Pages/User/UserLogin";
 import UserRegistration from "./Pages/User/UserRegistration";
+import TotalEventList from "./components/TotalEventList";
 const App = () => {
   const { authState } = useContext(AuthContext);
   console.log("authState", authState.isAuth);
@@ -32,7 +33,7 @@ const App = () => {
             <Route path="/" element={<Home />} /> {/* Home Route */}
             <Route path="/aboutus" element={<AboutUs />} />{" "}
             {/* About Us Page */}
-            <Route path="/event" element={<EventList />} />{" "}
+            <Route path="/event" element={<TotalEventList />} />{" "}
             {/* List of Events */}
             <Route path="/event/:id" element={<EventSection />} />{" "}
             {/* Event Details Page */}
