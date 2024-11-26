@@ -39,9 +39,18 @@ const UserRoutes = () => {
       />
       <Routes>
         {/* User Dashboard */}
-        <Route path="/user/dashboard" element={<Dashboard />} />{" "}
-        <Route path="/user/events" element={<EventList />} />{" "}
-        <Route path="/event" element={<TotalEventList />} />{" "}
+        <Route
+          path="/user/dashboard"
+          element={<Dashboard themeState={themeState} />}
+        />{" "}
+        <Route
+          path="/user/events"
+          element={<EventList themeState={themeState} />}
+        />{" "}
+        <Route
+          path="/event"
+          element={<TotalEventList themeState={themeState} />}
+        />{" "}
       </Routes>
     </UserLayout>
   );

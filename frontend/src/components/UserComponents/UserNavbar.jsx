@@ -3,10 +3,9 @@ import { IoMdNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { FaBars } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
+import { FaMoon } from "react-icons/fa6";
 
 const UserNavbar = ({ enableLightMode, enableDarkMode, themeState }) => {
-  const [openSideBar, setOpenSideBar] = useState(false);
-
   //   handleSetSideBar = () => {};
 
   return (
@@ -36,8 +35,11 @@ const UserNavbar = ({ enableLightMode, enableDarkMode, themeState }) => {
           <IoMdNotifications size={28} />
 
           <span>
-            <MdOutlineWbSunny size={28} onClick={enableLightMode} />
-            <MdOutlineWbSunny size={28} onClick={enableDarkMode} />
+            {themeState.darkMode ? (
+              <MdOutlineWbSunny size={28} onClick={enableLightMode} />
+            ) : (
+              <FaMoon size={28} onClick={enableDarkMode} />
+            )}
           </span>
         </span>
       </div>
