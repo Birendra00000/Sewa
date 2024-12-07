@@ -16,40 +16,48 @@ import { AuthContext } from "./context/authentication/AuthContext";
 import UserLogin from "./Pages/User/UserLogin";
 import UserRegistration from "./Pages/User/UserRegistration";
 import TotalEventList from "./components/TotalEventList";
+import OrgNavbar from "./components/OrgComponents/OrgNavbar";
+import OrgRoutes from "./Pages/Organization/Routes/OrgRoutes";
 const App = () => {
   const { authState } = useContext(AuthContext);
-  console.log("authState", authState.isAuth);
+
   return (
     <Router>
-      {authState?.isAuth ? <></> : <Navbar />}
-      <Routes>
-        {authState.isAuth ? (
-          <>
-            {/* FOR USER ONLY */}
-            <Route path="/*" element={<UserRoutes />} />{" "}
-          </>
+      {/* Conditional Navbar */}
+      {authState?.isAuth ? (
+        authState.accountType === "organization" ? (
+          <OrgNavbar />
         ) : (
+          <Navbar />
+        )
+      ) : (
+        <Navbar />
+      )}
+
+      {/* Conditional Routes */}
+      <Routes>
+        {authState?.isAuth ? (
+          authState.accountType === "organization" ? (
+            // Organization Routes
+            <Route path="/*" element={<OrgRoutes />} />
+          ) : (
+            // User Routes
+            <Route path="/*" element={<UserRoutes />} />
+          )
+        ) : (
+          // Public Routes
           <>
-            <Route path="/" element={<Home />} /> {/* Home Route */}
-            <Route path="/aboutus" element={<AboutUs />} />{" "}
-            {/* About Us Page */}
-            <Route path="/event" element={<TotalEventList />} />{" "}
-            {/* List of Events */}
-            <Route path="/event/:id" element={<EventSection />} />{" "}
-            {/* Event Details Page */}
-            {/* All user-related routes */} {/* FOR ORGANIZATION ONLY */}
-            <Route path="/orgregister" element={<OrgRegistration />} />{" "}
-            {/* Registration Form */}
-            <Route path="/contactus" element={<ContactUs />} />{" "}
-            <Route path="/createEvent" element={<CreateEvent />} />{" "}
-            {/* User Registration */}
-            <Route path="/user/login" element={<UserLogin />} />{" "}
-            {/* User Login */}
-            <Route path="/user/register" element={<UserRegistration />} />{" "}
+            <Route path="/" element={<Home />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/event" element={<TotalEventList />} />
+            <Route path="/event/:id" element={<EventSection />} />
+            <Route path="/orgregister" element={<OrgRegistration />} />
+            <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/user/login" element={<UserLogin />} />
+            <Route path="/user/register" element={<UserRegistration />} />
           </>
         )}
       </Routes>
-      {/* <Footer /> */}
     </Router>
   );
 };
