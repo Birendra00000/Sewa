@@ -49,7 +49,7 @@ const CreateEvent = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${your_token_here}`,
+            // Authorization: `Bearer ${your_token_here}`,
           },
         }
       );

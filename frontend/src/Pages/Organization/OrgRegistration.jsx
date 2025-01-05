@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FiUpload } from "react-icons/fi";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrgRegistration = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     orgName: "",
     orgEmail: "",
@@ -76,13 +78,14 @@ const OrgRegistration = () => {
       );
       // console.log("Event created successfully", response);
       if (response.status === 200) {
+        // navigate("/orgLogin");
         notifySuccess();
       }
 
       // console.log(JSON.stringify(response.data.data));
       // console.log("response", response.data.user);
     } catch (error) {
-      toast.error(error.response);
+      notifyError();
     }
   };
 
@@ -266,7 +269,13 @@ const OrgRegistration = () => {
               >
                 Submit Form
               </button>
-            </div>
+            </div>{" "}
+            <span className="w-full flex  justify-center font-medium text-blue-500">
+              <p>Already have an account?</p>
+              <Link to="/org/login" className="underline  font-semibold">
+                Sign In
+              </Link>
+            </span>
           </form>
         </div>
         <ToastContainer />

@@ -3,6 +3,7 @@ import dateFormat, { masks } from "dateformat";
 import EventStatus from "./EventStatus";
 
 const MySingleEventCont = ({ authState }) => {
+  // console.log("AuthStateSingleEventContainer", authState);
   return (
     <>
       <div className="w-full flex justify-center h-full items-center">

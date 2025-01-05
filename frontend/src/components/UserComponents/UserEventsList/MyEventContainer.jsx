@@ -3,7 +3,7 @@ import EventStatus from "./EventStatus";
 import dateFormat, { masks } from "dateformat";
 
 const MyEventContainer = ({ authState }) => {
-  console.log("event", authState);
+  // console.log("event", authState);
   return (
     <>
       <div className=" h-[150px] md:h-[200px]  rounded-lg w-[96%] p-1">

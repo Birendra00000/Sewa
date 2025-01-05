@@ -30,6 +30,8 @@ const UserRoutes = () => {
     themeDispatch({ type: ACTION_TYPES.LIGHTHMODE });
   const enableDarkMode = () => themeDispatch({ type: ACTION_TYPES.DARKMODE });
 
+  // console.log("themeState", themeState);
+
   return (
     <UserLayout>
       <UserNavbar

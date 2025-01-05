@@ -4,9 +4,8 @@ import MySingleEventCont from "./MySingleEventCont";
 import { AuthContext } from "../../../context/authentication/AuthContext";
 import Header from "../dashboard/reusable/Header";
 
-const TaskContainer = () => {
+const UserEvent = () => {
   const { authState } = useContext(AuthContext);
-  console.log("Authstatatata", authState);
   const [openIndex, setOpenIndex] = useState(0); // Default open index
 
   // Function to handle click on todo item
@@ -46,4 +45,4 @@ const TaskContainer = () => {
   );
 };
 
-export default TaskContainer;
+export default UserEvent;

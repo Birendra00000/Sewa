@@ -7,21 +7,19 @@ import { FaMoon } from "react-icons/fa6";
 
 const UserNavbar = ({ enableLightMode, enableDarkMode, themeState }) => {
   //   handleSetSideBar = () => {};
+  console.log("themeStateNavbar", themeState);
 
   return (
     <div
       className="flex  items-center pt-8 w-full justify-center"
       style={{
-        backgroundColor: themeState.darkMode ? "#333" : "#fff",
-        color: themeState.darkMode ? "#fff" : "#000",
+        backgroundColor: themeState?.darkMode ? "#333" : "#fff",
+        color: themeState?.darkMode ? "#fff" : "#000",
         padding: "20px",
       }}
     >
       <div className="w-11/12 flex justify-between gap-x-6 items-center">
-        <div className="relative flex items-center gap-5">
-          <span className="cursor-pointer">
-            <FaBars />{" "}
-          </span>
+        <div className="relative flex items-center gap-2 md:gap-5">
           <input
             type="search"
             placeholder="search"
@@ -31,11 +29,11 @@ const UserNavbar = ({ enableLightMode, enableDarkMode, themeState }) => {
             <CiSearch size={24} />
           </span>
         </div>
-        <span className="flex gap-10 items-center">
+        <span className="flex gap-5 md:gap-10 items-center">
           <IoMdNotifications size={28} />
 
           <span>
-            {themeState.darkMode ? (
+            {themeState?.darkMode ? (
               <MdOutlineWbSunny size={28} onClick={enableLightMode} />
             ) : (
               <FaMoon size={28} onClick={enableDarkMode} />

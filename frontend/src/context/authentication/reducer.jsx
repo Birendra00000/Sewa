@@ -2,8 +2,8 @@
 // import { addToCookie } from "../../utils/storageFunc";
 import { addToCookie, removefromCookie } from "../../utils/StorageFun";
 import { API, JWT_TOKEN } from "../../api/index";
-
 import * as ACTION_TYPES from "./type";
+
 let token, account_type, lastName, firstName, event_list;
 if (typeof window !== "undefined") {
   // const userData = localStorage.getItem("AuthUser")

@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const UserLogin = () => {
+const OrgLogin = () => {
   const navigate = useNavigate();
   const { authDispatch, setRefetch } = useContext(AuthContext);
 
@@ -29,13 +29,11 @@ const UserLogin = () => {
     e.preventDefault();
     try {
       const response = await API.post(
-        "http://localhost:4000/api/userlogin",
+        "http://localhost:4000/api/orglogin",
         formData
       );
       const { data } = response;
-      // console.log("response", response);
-      // console.log("data", data);
-
+      console.log("ORGdata", response);
       const { token, userData } = data;
       authDispatch({
         type: "LOGIN",
@@ -43,11 +41,10 @@ const UserLogin = () => {
           token,
           ...userData,
         },
-      });
+      }); // Set refetch to true to trigger data fetching in AuthProvider
       // console.log("JSON", JSON.stringify(authDispatch));
-      setRefetch(true); // Set refetch to true to trigger data fetching in AuthProvider
       // window.location.reload(); // Reloads the entire page
-      navigate("/user/dashboard");
+      navigate("/org/dashboard");
       // window.location.reload();
 
       // Reset form data
@@ -72,7 +69,7 @@ const UserLogin = () => {
         <div className="max-w-3xl w-full space-y-8 bg-white  rounded-xl shadow-lg">
           {" "}
           <div className="text-3xl font-bold text-center text-white items-center mb-6 flex justify-around bg-blue-300">
-            Volunteer Registration
+            Organization Login
             <img
               src="/assets/logo.png"
               alt=""
@@ -127,7 +124,7 @@ const UserLogin = () => {
             </div>{" "}
             <span className="w-full flex  justify-center font-medium text-blue-500">
               <p>Already have an account?</p>
-              <Link to="/user/register" className="underline font-semibold">
+              <Link to="/org/register" className="underline font-semibold">
                 Sign Up
               </Link>
             </span>
@@ -139,4 +136,4 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+export default OrgLogin;

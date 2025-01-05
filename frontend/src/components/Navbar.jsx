@@ -72,7 +72,7 @@ const Navbar = () => {
           {" "}
           User
         </Link>
-        <Link to="/orgregister" className="hover:underline ">
+        <Link to="/org/register" className="hover:underline ">
           Organization
         </Link>
       </span>
