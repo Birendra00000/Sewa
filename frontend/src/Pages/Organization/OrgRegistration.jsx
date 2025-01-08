@@ -22,7 +22,7 @@ const OrgRegistration = () => {
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  console.log("formdata", formData);
+  // console.log("formdata", formData);
 
   const handleChange = (e) => {
     setFormData({

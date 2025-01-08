@@ -11,8 +11,10 @@ const AuthProvider = ({ children }) => {
     Reducer.initialState
   );
   // console.log("userData", authState);
-  console.log("authState1111", authState);
+  // console.log("authState1111", authState);
   const [userData, setUserData] = useState({});
+  const [orgData, setOrgData] = useState({});
+
   const [refetch, setRefetch] = useState(false); // Changed to false initially
   // console.log("AUTHCONTEXT", userData);
 
@@ -46,6 +48,7 @@ const AuthProvider = ({ children }) => {
       value={{
         authState,
         userData,
+        orgData,
         authDispatch,
         setRefetch,
         refetch,

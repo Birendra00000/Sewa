@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LuLayoutDashboard } from "react-icons/lu";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
+
 import { FaRegBell } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa";
-
+import { IoClose } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
 import { FaPeopleRobbery } from "react-icons/fa6";
-import { GoOrganization } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authentication/AuthContext";
 import * as ACTION_TYPES from "../../context/authentication/type";
@@ -26,7 +24,7 @@ const SideBar = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 800) {
-        setOpenSideBar(true);
+        return setOpenSideBar(true);
       }
     };
     handleResize(); // Set initial state
@@ -52,13 +50,22 @@ const SideBar = () => {
           className="cursor-pointer md:hidden absolute top-[3%] p-[1%]"
           onClick={handleSetSideBar}
         >
-          <FaBars />{" "}
+          <FaBars size={20} />{" "}
         </span>
       )}
       {openSideBar && (
-        <div className="flex justify-start items-start z-[1] md:z-0 ">
-          <div className="w-[280px] bg-blue-400 h-full flex justify-center">
+        <div className="flex justify-start items-start z-[1] md:z-0 absolute md:static ">
+          <div className="w-[200px] sm:w-[250px] md:w-[280px] bg-blue-400 h-full flex justify-end flex-col md:justify-start">
+            <span
+              className="px-2 pt-2 flex justify-end text-white cursor-pointer md:hidden"
+              onClick={() => {
+                setOpenSideBar(false);
+              }}
+            >
+              <IoClose size={24} />
+            </span>
             <div className="p-4 w-11/12 flex items-center flex-col gap-y-4">
+              {" "}
               <img
                 src="/assets/logo.png"
                 alt=""
@@ -93,9 +100,8 @@ const SideBar = () => {
                   <p>Account</p>
                 </span>
               </div>
-
               <div className="w-full mt-32" onClick={handleLogOut}>
-                <span className="text-white flex items-center gap-x-1 p-2 bg-red-500  hover:bg-red-600 rounded-md w-full">
+                <span className="text-white flex items-center gap-x-1 p-2 bg-red-500  hover:bg-red-600 rounded-md w-full cursor-pointer">
                   {" "}
                   <LuLogOut />
                   <p>Logout</p>

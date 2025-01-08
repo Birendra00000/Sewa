@@ -40,7 +40,7 @@ exports.orgRegistartion = async (req, res) => {
       });
     }
 
-    const hashPassword = await bcrypt.hash(orgPassword, 6);
+    const hashPassword = await bcrypt.hash(req.body.orgPassword, 6);
 
     //Create a new todo item with the image URL
     const orgRegistartion = await orgSchema.create({
@@ -78,13 +78,14 @@ exports.orgLogin = async (req, res) => {
     }
 
     const orgExist = await orgModel.findOne({ orgEmail: email.toLowerCase() });
-
     if (!orgExist) {
       return res.status(400).json({
         message: "Org not found",
       });
     }
     console.log("Org found all:", orgExist);
+
+    // console.log("Org found all:", orgExist);
 
     // Log theorg object to verify the password field exists
     console.log("Org found:", orgExist?.orgPassword);

@@ -33,13 +33,13 @@ const OrgLogin = () => {
         formData
       );
       const { data } = response;
-      console.log("ORGdata", response);
-      const { token, userData } = data;
+      // console.log("ORGdata", response?.data?.orgExist);
+      const { token, orgExist } = data;
       authDispatch({
         type: "LOGIN",
         payload: {
           token,
-          ...userData,
+          ...orgExist,
         },
       }); // Set refetch to true to trigger data fetching in AuthProvider
       // console.log("JSON", JSON.stringify(authDispatch));
