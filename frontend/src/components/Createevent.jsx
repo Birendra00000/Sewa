@@ -12,7 +12,11 @@ const CreateEvent = () => {
     deadlineDate: "",
   });
   const [file, setFile] = useState(null);
-
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    toast.error("Authorization token is missing. Please log in.");
+    return;
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,7 +31,7 @@ const CreateEvent = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
+  consol.log(handleSubmit);
   const handleSubmit = async (e) => {
     e.preventDefault();
 

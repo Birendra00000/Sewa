@@ -10,11 +10,19 @@ import OrgNavbar from "../../../components/OrgComponents/OrgNavbar";
 import OrgFashBoard from "../DashBoard/OrgFashBoard";
 import OrgLogin from "../OrgLogin";
 import OrgRegistration from "../orgRegistration";
+import OrgEvents from "../OrgEvents/OrgEvents";
 
 const OrgLayout = ({ children }) => {
   return (
     <div className="flex h-[100vh] w-full">
-      {children} {/* Render the child components, like dashboard */}
+      <OrgNavbar />{" "}
+      <div
+        style={{
+          flex: 1,
+        }}
+      >
+        {children} {/* Render the child components, like dashboard */}
+      </div>
     </div>
   );
 };
@@ -28,16 +36,15 @@ const OrgRoutes = () => {
 
   return (
     <OrgLayout>
-      {/* <OrgNavbar
-        enableLightMode={enableLightMode}
-        enableDarkMode={enableDarkMode}
-        themeState={themeState}
-      /> */}
       <Routes>
         {/* User Dashboard */}
         <Route
           path="/org/dashboard"
           element={<OrgFashBoard themeState={themeState} />}
+        />{" "}
+        <Route
+          path="/org/events"
+          element={<OrgEvents themeState={themeState} />}
         />{" "}
       </Routes>
     </OrgLayout>

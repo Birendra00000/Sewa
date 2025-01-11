@@ -17,7 +17,9 @@ const isAuthenticated = async (req, res, next) => {
 
   // Extract the token from the header
   const token = authHeader.split(" ")[1];
-
+  if (!token) {
+    return res.status(400).json({ message: "Token is missing" });
+  }
   try {
     // Decode the token without verifying to extract the role or type
     const decodedHeader = jwt.decode(token);
@@ -36,7 +38,7 @@ const isAuthenticated = async (req, res, next) => {
       decodedHeader.role === "organization"
         ? await orgModel.findOne({ _id: decodedToken.id })
         : await userModel.findOne({ _id: decodedToken.id });
-
+    console.log("Fetched user/organization:", userOrOrg); // Log the fetched user/organization
     if (!userOrOrg) {
       return res.status(404).json({
         message: "User or Organization does not exist with this token",

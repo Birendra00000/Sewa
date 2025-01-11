@@ -30,7 +30,7 @@ const App = () => {
       {/* Conditional Routes */}
       <Routes>
         {authState?.isAuth ? (
-          authState.accountType === "organization" ? (
+          authState.account_type === "organization" ? (
             // Organization Routes
             <Route path="/*" element={<OrgRoutes />} />
           ) : (

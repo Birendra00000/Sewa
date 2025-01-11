@@ -3,7 +3,9 @@ const cloudinary = require("../cloudinaryConfig");
 
 exports.createEvent = async (req, res) => {
   try {
-    console.log(req.body);
+    const orgId = req.userOrOrg.id; // Organization ID from the authenticated user
+    console.log("OrganizationId", orgId); // Debugging log to check the orgId
+    console.log(req.body); // Log the request body for debugging
     const file = req.file;
     let imageUrl;
 
@@ -14,8 +16,25 @@ exports.createEvent = async (req, res) => {
       imageUrl = ""; // No image provided
     }
 
-    const { title, description, location, startDate, deadlineDate } = req.body;
-    if (!title || !description || !location || !startDate || !startDate) {
+    const {
+      title,
+      description,
+      location,
+      startDate,
+      deadlineDate,
+      eventCapacity,
+      category,
+      organization,
+    } = req.body;
+    if (
+      !title ||
+      !description ||
+      !location ||
+      !eventCapacity ||
+      !category ||
+      !startDate ||
+      !startDate
+    ) {
       return res.status(400).json({
         message: "Missing required fields",
       });
@@ -29,6 +48,8 @@ exports.createEvent = async (req, res) => {
       eventLocation: location,
       startDate,
       deadlineDate,
+      eventCapacity,
+      category,
     });
 
     res.status(200).json({
