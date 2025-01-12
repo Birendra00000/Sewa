@@ -13,7 +13,6 @@ import UserRegistration from "./Pages/User/UserRegistration";
 import TotalEventList from "./components/TotalEventList";
 import OrgRoutes from "./Pages/Organization/Routes/OrgRoutes";
 import OrgLogin from "./Pages/Organization/OrgLogin";
-import CreateEvent from "./components/Createevent";
 
 const App = () => {
   const { authState } = useContext(AuthContext);
@@ -43,7 +42,6 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/event" element={<TotalEventList />} />
-            <Route path="/createEvent" element={<CreateEvent />} />
             <Route path="/event/:id" element={<EventSection />} />
             <Route path="/org/register" element={<OrgRegistration />} />
             <Route path="/org/login" element={<OrgLogin />} />

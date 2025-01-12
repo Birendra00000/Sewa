@@ -1,76 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import CreateEventModal from "../../../components/OrgComponents/CreateEventModal";
-
-// Example data
-const events = [
-  {
-    eventTitle: "Tech Workshop",
-    eventDescription: "A hands-on workshop on modern web technologies.",
-    eventLocation: "Tech Park, City Center",
-    eventImage: "https://via.placeholder.com/150",
-    startDate: "2025-01-15",
-    deadlineDate: "2025-01-20",
-    eventCapacity: 50,
-    category: "Technology Workshop",
-    participants: ["User1", "User2"],
-  },
-  {
-    eventTitle: "Community Cleanup",
-    eventDescription: "Join us to clean and restore our local park.",
-    eventLocation: "Greenwood Park",
-    eventImage: "https://via.placeholder.com/150",
-    startDate: "2025-02-01",
-    deadlineDate: "2025-02-05",
-    eventCapacity: 30,
-    category: "Social Events",
-    participants: ["User3", "User4"],
-  },
-  {
-    eventTitle: "Community Cleanup",
-    eventDescription: "Join us to clean and restore our local park.",
-    eventLocation: "Greenwood Park",
-    eventImage: "https://via.placeholder.com/150",
-    startDate: "2025-02-01",
-    deadlineDate: "2025-02-05",
-    eventCapacity: 30,
-    category: "Social Events",
-    participants: ["User3", "User4"],
-  },
-  {
-    eventTitle: "Community Cleanup",
-    eventDescription: "Join us to clean and restore our local park.",
-    eventLocation: "Greenwood Park",
-    eventImage: "https://via.placeholder.com/150",
-    startDate: "2025-02-01",
-    deadlineDate: "2025-02-05",
-    eventCapacity: 30,
-    category: "Social Events",
-    participants: ["User3", "User4"],
-  },
-  {
-    eventTitle: "Community Cleanup",
-    eventDescription: "Join us to clean and restore our local park.",
-    eventLocation: "Greenwood Park",
-    eventImage: "https://via.placeholder.com/150",
-    startDate: "2025-02-01",
-    deadlineDate: "2025-02-05",
-    eventCapacity: 30,
-    category: "Social Events",
-    participants: ["User3", "User4"],
-  },
-];
+import { AuthAPI } from "../../../api";
 
 const EventTable = () => {
   const [editEvent, setEditEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [events, setAllEvents] = useState([]);
+
   const handleCreateEvent = (eventData) => {
     console.log("Event Created:", eventData);
   };
   const deleteEvent = (eventTitle) => {
     console.log("Delete event:", eventTitle);
   };
+
+  const fetchUserEvents = async () => {
+    try {
+      const response = await AuthAPI.get("/event");
+      setAllEvents(response.data.getAllEvent);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUserEvents();
+  });
 
   return (
     <>
@@ -103,37 +59,38 @@ const EventTable = () => {
               Actions
             </span>
           </div>
-          {events.map((event, index) => (
-            <div
-              className="flex w-full justify-between mb-2 items-center text-black"
-              key={index}
-            >
-              <span className="w-1/5 text-center">{event.eventTitle}</span>
-              <span className="w-1/5 text-center">
-                {event.eventDescription}
-              </span>
-              <span className="w-1/6 text-center">{event.eventLocation}</span>
-              <span className="w-1/6 text-center">{event.startDate}</span>
-              <span className="w-1/6 text-center">{event.deadlineDate}</span>
-              <span className="w-1/6 text-center">{event.eventCapacity}</span>
-              <span className="w-1/6 text-center">{event.category}</span>
-              <span className="w-1/6 text-center">
-                {event.participants.length}
-              </span>
-              <span className="w-1/6 text-center flex justify-center space-x-5">
-                <FaRegEdit
-                  size={20}
-                  className="text-blue-400 cursor-pointer"
-                  onClick={() => setEditEvent(event)}
-                />
-                <MdDelete
-                  size={28}
-                  className="text-red-400 cursor-pointer"
-                  onClick={() => deleteEvent(event.eventTitle)}
-                />
-              </span>
-            </div>
-          ))}
+          {events &&
+            events.map((event, index) => (
+              <div
+                className="flex w-full justify-between mb-2 items-center text-black h-[100px] "
+                key={index}
+              >
+                <span className="w-1/5 text-center">{event.eventTitle}</span>
+                <span className="w-1/5 text-center h-full overflow-hidden ...">
+                  {event.eventDescription}
+                </span>
+                <span className="w-1/6 text-center">{event.eventLocation}</span>
+                <span className="w-1/6 text-center">{event.startDate}</span>
+                <span className="w-1/6 text-center">{event.deadlineDate}</span>
+                <span className="w-1/6 text-center">{event.eventCapacity}</span>
+                <span className="w-1/6 text-center">{event.category}</span>
+                <span className="w-1/6 text-center">
+                  {event.participants.length}
+                </span>
+                <span className="w-1/6 text-center flex justify-center space-x-5">
+                  <FaRegEdit
+                    size={20}
+                    className="text-blue-400 cursor-pointer"
+                    onClick={() => setEditEvent(event)}
+                  />
+                  <MdDelete
+                    size={28}
+                    className="text-red-400 cursor-pointer"
+                    onClick={() => deleteEvent(event.eventTitle)}
+                  />
+                </span>
+              </div>
+            ))}
         </div>
         <div className="flex mt-10 w-full justify-center">
           <span

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthAPI } from "../../api";
@@ -14,10 +13,9 @@ const CreateEventModal = ({ isOpen, onClose }) => {
     eventCapacity: "",
     category: "",
   });
-
-  console.log(formData);
+  // console.log(formData);
   const [file, setFile] = useState(null);
-  console.log("fileee,file", file);
+  // console.log("fileee,file", file);
   const categories = [
     "Social Events",
     "Technology Workshop",
@@ -27,7 +25,7 @@ const CreateEventModal = ({ isOpen, onClose }) => {
     "Entertainment",
   ];
 
-  const notifySuccess = () => toast.success("Event created successfully");
+  const notifySuccess = () => toast.success("Event created successfully", 200);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -38,11 +36,23 @@ const CreateEventModal = ({ isOpen, onClose }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("Authorization token is missing. Please log in.");
-      return;
+
+    // Retrieve AuthUser object from localStorage
+    const authUser = JSON.parse(localStorage.getItem("AuthUser"));
+    let token;
+    // Check if authUser exists and has a token
+    if (authUser && authUser?.token) {
+      token = authUser?.token;
+      // console.log("Token:", token);
+    } else {
+      // console.log("No token found in AuthUser.");
     }
+
+    // Decode the token
+
+    // Check if the decoded token is valid
+
+    // Prepare form data for submission
     const formDataToSend = new FormData();
     formDataToSend.append("title", formData.title);
     formDataToSend.append("description", formData.description);
@@ -67,11 +77,20 @@ const CreateEventModal = ({ isOpen, onClose }) => {
           },
         }
       );
+      setFormData({
+        title: "",
+        description: "",
+        location: "",
+        startDate: "",
+        deadlineDate: "",
+        eventCapacity: "",
+        category: "",
+      });
+      setFile(null);
 
-      console.log("Event created successfully", response);
+      // console.log("Event created successfully", response);
       notifySuccess();
-
-      //Handle success (e.g., redirect to another page or show a success message)
+      // Handle success (e.g., clear form, close modal)
     } catch (error) {
       if (error.response) {
         console.log("Response data:", error.response.data);
@@ -83,11 +102,11 @@ const CreateEventModal = ({ isOpen, onClose }) => {
         console.log("Error setting up the request:", error.message);
       }
 
-      // Send appropriate response
+      // Handle error appropriately
     }
   };
 
-  console.log("handleSubmit", handleSubmit);
+  // console.log("handleSubmit", handleSubmit);
 
   if (!isOpen) return null;
 
