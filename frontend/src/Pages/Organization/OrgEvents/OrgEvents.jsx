@@ -91,7 +91,7 @@ const EventTable = () => {
                   {event.participants.length}
                 </span>
                 <span className="w-[100px] text-center flex justify-center space-x-5">
-                  <EditEvents event Data={event} isOpen={isModalOpen} />
+                  <EditEvents event={event} />
                   <MdDelete
                     size={28}
                     className="text-red-400 cursor-pointer"

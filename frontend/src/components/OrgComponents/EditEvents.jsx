@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { FaRegEdit } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+
 const EditEvents = ({ event }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -11,8 +14,11 @@ const EditEvents = ({ event }) => {
     eventCapacity: "",
     category: "",
   });
-
+  console.log("updateEvents", event);
   const [file, setFile] = useState(null);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const categories = [
     "Social Events",
@@ -22,16 +28,24 @@ const EditEvents = ({ event }) => {
     "Sports",
     "Entertainment",
   ];
+  const formDateData = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   // Populate form with existing event data when modal opens
   useEffect(() => {
     if (event) {
       setFormData({
         title: event.eventTitle || "",
-        description: event.description || "",
+        description: event.eventDescription || "",
         location: event.eventLocation || "",
-        startDate: event.startDate || "",
-        deadlineDate: event.deadlineDate || "",
+        startDate: formDateData(event.startDate) || "",
+        deadlineDate: formDateData(event.deadlineDate) || "",
         eventCapacity: event.eventCapacity || "",
         category: event.category || "",
       });
@@ -58,7 +72,6 @@ const EditEvents = ({ event }) => {
     try {
       await AuthAPI.put(`/event/${eventData._id}`, updatedEventData);
       alert("Event updated successfully");
-      onClose(); // Close the modal
       refreshEvents(); // Refresh event data in the parent component
     } catch (error) {
       console.error("Error updating event:", error);
@@ -67,96 +80,86 @@ const EditEvents = ({ event }) => {
 
   return (
     <>
-      {" "}
       <FaRegEdit
         size={20}
         className="text-blue-400 cursor-pointer"
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleShow}
       />
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={onClose}
-        contentLabel="Update Event Modal"
-        className="modal-class"
-        overlayClassName="overlay-class"
-      >
-        <div className="p-6">
-          <h2 className="text-lg font-semibold mb-4">Update Event</h2>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Title</label>
+            <div className="mb-3">
+              <label className="form-label">Title</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Description</label>
+            <div className="mb-3">
+              <label className="form-label">Description</label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Location</label>
+            <div className="mb-3">
+              <label className="form-label">Location</label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Start Date</label>
+            <div className="mb-3">
+              <label className="form-label">Start Date</label>
               <input
                 type="date"
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">
-                Deadline Date
-              </label>
+            <div className="mb-3">
+              <label className="form-label">Deadline Date</label>
               <input
                 type="date"
                 name="deadlineDate"
                 value={formData.deadlineDate}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Capacity</label>
+            <div className="mb-3">
+              <label className="form-label">Capacity</label>
               <input
                 type="number"
                 name="eventCapacity"
                 value={formData.eventCapacity}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               />
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">Category</label>
+            <div className="mb-3">
+              <label className="form-label">Category</label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="p-2 border rounded-md"
+                className="form-control"
                 required
               >
                 <option value="" disabled>
@@ -169,31 +172,20 @@ const EditEvents = ({ event }) => {
                 ))}
               </select>
             </div>
-            <div className="flex flex-col mb-4">
-              <label className="text-sm font-semibold mb-1">File</label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className="p-2 border rounded-md"
-              />
-            </div>
-            <div className="flex justify-end">
+            <div className="d-flex justify-content-end">
               <button
                 type="button"
-                className="px-4 py-2 bg-gray-500 text-white rounded-md mr-2"
-                onClick={onClose}
+                className="btn btn-secondary me-2"
+                onClick={handleClose}
               >
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
-              >
+              <button type="submit" className="btn btn-primary">
                 Update Event
               </button>
             </div>
           </form>
-        </div>
+        </Modal.Body>
       </Modal>
     </>
   );
