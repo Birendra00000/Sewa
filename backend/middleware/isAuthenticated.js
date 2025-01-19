@@ -6,7 +6,7 @@ const promisify = require("util").promisify;
 const isAuthenticated = async (req, res, next) => {
   // Extract the token from the 'Authorization' header
   const authHeader = req.headers.authorization;
-  console.log("Request Headers:", authHeader);
+  // console.log("Request Headers:", authHeader);
 
   // Check if the token exists
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -38,7 +38,7 @@ const isAuthenticated = async (req, res, next) => {
       decodedHeader.role === "organization"
         ? await orgModel.findOne({ _id: decodedToken.id })
         : await userModel.findOne({ _id: decodedToken.id });
-    console.log("Fetched user/organization:", userOrOrg); // Log the fetched user/organization
+    // console.log("Fetched user/organization:", userOrOrg); // Log the fetched user/organization
     if (!userOrOrg) {
       return res.status(404).json({
         message: "User or Organization does not exist with this token",

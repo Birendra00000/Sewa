@@ -24,7 +24,6 @@ exports.createEvent = async (req, res) => {
       deadlineDate,
       eventCapacity,
       category,
-      organization,
     } = req.body;
     if (
       !title ||
@@ -62,6 +61,63 @@ exports.createEvent = async (req, res) => {
       message: "Error creating Event",
       error: error.message,
     });
+  }
+};
+//UPDATE The Events
+
+exports.updateEvents = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    if (!eventId) {
+      return res.status(400).json({
+        message: "Pleased provide EventId",
+      });
+    }
+
+    const {
+      eventTitle,
+      eventDescription,
+      eventLocation,
+      startDate,
+      deadlineDate,
+      eventCapacity,
+      category,
+    } = req.body;
+
+    let imageUrl = "";
+    if (req.file) {
+      imageUrl = req.file.path;
+    }
+
+    const eventData = await eventSchema.findById(eventId);
+
+    if (!eventData) {
+      return res.status(400).json({
+        message: "Event Not Found",
+      });
+    }
+
+    const updateEvent = await eventSchema.findByIdAndUpdate(
+      eventId,
+      {
+        eventTitle,
+        eventDescription,
+        eventLocation,
+        startDate,
+        deadlineDate,
+        eventCapacity,
+        category,
+        imageUrl: imageUrl || eventData.eventImage,
+      },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json({
+      message: "Event updated successfully",
+      data: updateEvent,
+    });
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
