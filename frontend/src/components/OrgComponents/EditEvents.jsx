@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaRegEdit } from "react-icons/fa";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { AuthAPI } from "../../api";
 
-const EditEvents = ({ event }) => {
+const EditEvents = ({ event, onEventUpdate }) => {
   const [formData, setFormData] = useState({
     eventTitle: "",
     eventDescription: "",
@@ -15,10 +14,26 @@ const EditEvents = ({ event }) => {
     eventCapacity: "",
     category: "",
   });
-  // console.log("updateEvents", event);
+
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+
+  const handleClose = () => {
+    setShow(false);
+    setFormData({
+      eventTitle: "",
+      eventDescription: "",
+      eventLocation: "",
+      startDate: "",
+      deadlineDate: "",
+      eventCapacity: "",
+      category: "",
+    });
+    setFile(null);
+    setPreview(null);
+  };
+
   const handleShow = () => setShow(true);
 
   const categories = [
@@ -29,6 +44,7 @@ const EditEvents = ({ event }) => {
     "Sports",
     "Entertainment",
   ];
+
   const formDateData = (date) => {
     if (!date) return "";
     const d = new Date(date);
@@ -38,7 +54,6 @@ const EditEvents = ({ event }) => {
     return `${year}-${month}-${day}`;
   };
 
-  // Populate form with existing event data when modal opens
   useEffect(() => {
     if (event) {
       setFormData({
@@ -50,6 +65,7 @@ const EditEvents = ({ event }) => {
         eventCapacity: event.eventCapacity || "",
         category: event.category || "",
       });
+      setPreview(event.image || null); // Assuming `event.image` contains the current image URL
     }
   }, [event]);
 
@@ -59,11 +75,23 @@ const EditEvents = ({ event }) => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result); // Generate preview URL
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const authUser = JSON.parse(localStorage.getItem("AuthUser"));
+    const token = authUser?.token || null;
+
     const updatedEventData = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       updatedEventData.append(key, value);
@@ -78,6 +106,8 @@ const EditEvents = ({ event }) => {
         },
       });
       console.log("Event updated successfully");
+      onEventUpdate(); // Notify parent to refresh events
+      handleClose();
     } catch (error) {
       console.error("Error updating event:", error);
     }
@@ -175,6 +205,23 @@ const EditEvents = ({ event }) => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Event Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="form-control"
+            />
+            {preview && (
+              <img
+                src={preview}
+                alt="Event Preview"
+                className="img-thumbnail mt-3"
+                style={{ width: "100%", maxHeight: "300px" }}
+              />
+            )}
           </div>
           <div className="d-flex justify-content-end">
             <button

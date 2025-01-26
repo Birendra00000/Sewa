@@ -36,31 +36,31 @@ const EventTable = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center mt-12 px-4 sm:px-6 lg:px-4">
+      <div className="w-full flex flex-col items-center mt-12 pl-4 sm:px-6 lg:px-4">
         <div className="flex flex-col w-full lg:w-full h-[420px] overflow-auto shadow-md">
-          <div className="flex w-full mb-4 bg-green-400 p-3 text-white sticky top-0">
-            <span className="w-[200px] text-sm md:text-lg text-center">
+          <div className="flex w-full mb-4 bg-green-400 p-2 text-white sticky top-0">
+            <span className="w-[25%] text-sm md:text-lg text-center">
               Title
             </span>
-            <span className="w-[150px] text-sm md:text-lg text-center">
+            <span className="w-[15%] text-sm md:text-lg text-center">
               Location
             </span>
-            <span className="w-[130px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Start Date
             </span>
-            <span className="w-[130px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Deadline
             </span>
-            <span className="w-[100px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Required
             </span>
-            <span className="w-[100px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Category
             </span>
-            <span className="w-[100px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Participants
             </span>
-            <span className="w-[100px] text-sm md:text-lg text-center">
+            <span className="w-[10%] text-sm md:text-lg text-center">
               Actions
             </span>
           </div>
@@ -70,27 +70,25 @@ const EventTable = () => {
                 className="flex w-full justify-between mb-2 items-center text-black h-[100px] text-[14px]"
                 key={event.id}
               >
-                <span className="w-[200px] text-center">
-                  {event.eventTitle}
-                </span>
-                <span className="w-[150px] text-center">
+                <span className="w-[25%] text-center">{event.eventTitle}</span>
+                <span className="w-[15%] text-center">
                   {event.eventLocation}
                 </span>
-                <span className="w-[130px] text-center">
+                <span className="w-[10%] text-center">
                   {dateFormat(event.startDate, "mmmm d")}
                 </span>
-                <span className="w-[130px] text-center">
+                <span className="w-[10%] text-center">
                   {" "}
                   {dateFormat(event.deadlineDate, "mmmm d")}
                 </span>
-                <span className="w-[100px] text-center">
+                <span className="w-[10%] text-center">
                   {event.eventCapacity}
                 </span>
-                <span className="w-[100px] text-center">{event.category}</span>
-                <span className="w-[100px] text-center">
+                <span className="w-[10%] text-center">{event.category}</span>
+                <span className="w-[10%] text-center">
                   {event.participants.length}
                 </span>
-                <span className="w-[100px] text-center flex justify-center space-x-5">
+                <span className="w-[10%] text-center flex justify-center space-x-5">
                   <EditEvents event={event} />
                   <MdDelete
                     size={28}

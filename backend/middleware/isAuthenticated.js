@@ -6,7 +6,7 @@ const promisify = require("util").promisify;
 const isAuthenticated = async (req, res, next) => {
   // Extract the token from the 'Authorization' header
   const authHeader = req.headers.authorization;
-  // console.log("Request Headers:", authHeader);
+  console.log("Request Headers:", authHeader);
 
   // Check if the token exists
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -23,22 +23,27 @@ const isAuthenticated = async (req, res, next) => {
   try {
     // Decode the token without verifying to extract the role or type
     const decodedHeader = jwt.decode(token);
+    console.log("decoded decodedHeader", decodedHeader);
 
     // Determine which secret to use based on the role (user or organization)
     const secret =
       decodedHeader.role === "organization"
         ? process.env.JWT_SECRET_ORG
         : process.env.JWT_SECRET_USER;
+    console.log("secret secret", secret);
 
     // Verify the token with the appropriate secret
+    console.log("Attempting to fetch from database...");
+
     const decodedToken = await promisify(jwt.verify)(token, secret);
+    console.log("decoded token", decodedToken);
 
     // Use the correct model based on the role
     const userOrOrg =
       decodedHeader.role === "organization"
         ? await orgModel.findOne({ _id: decodedToken.id })
         : await userModel.findOne({ _id: decodedToken.id });
-    // console.log("Fetched user/organization:", userOrOrg); // Log the fetched user/organization
+    console.log("Fetched user/organization:", userOrOrg); // Log the fetched user/organization
     if (!userOrOrg) {
       return res.status(404).json({
         message: "User or Organization does not exist with this token",

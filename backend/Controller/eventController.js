@@ -63,6 +63,7 @@ exports.createEvent = async (req, res) => {
     });
   }
 };
+
 //UPDATE The Events
 
 exports.updateEvents = async (req, res) => {
