@@ -5,9 +5,18 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import CreateEventModal from "../../../components/OrgComponents/CreateEventModal";
 import { AuthAPI } from "../../../api";
 import EditEvents from "../../../components/OrgComponents/EditEvents";
+import { FaEdit } from "react-icons/fa";
 
 const EventTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditOpen, setisEditOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const handleEditClick = (event) => {
+    setSelectedEvent(event);
+    setisEditOpen(true);
+  };
+
   const [events, setAllEvents] = useState([]);
 
   const notify = () => toast.warn("Events deleted successfully");
@@ -65,7 +74,7 @@ const EventTable = () => {
             </span>
           </div>
           {events &&
-            events.map((event, index) => (
+            events.map((event) => (
               <div
                 className="flex w-full justify-between mb-2 items-center text-black h-[100px] text-[14px]"
                 key={event.id}
@@ -78,7 +87,6 @@ const EventTable = () => {
                   {dateFormat(event.startDate, "mmmm d")}
                 </span>
                 <span className="w-[10%] text-center">
-                  {" "}
                   {dateFormat(event.deadlineDate, "mmmm d")}
                 </span>
                 <span className="w-[10%] text-center">
@@ -89,7 +97,13 @@ const EventTable = () => {
                   {event.participants.length}
                 </span>
                 <span className="w-[10%] text-center flex justify-center space-x-5">
-                  <EditEvents event={event} />
+                  <div onClick={() => handleEditClick(event)}>
+                    <FaEdit
+                      size={20}
+                      className="text-blue-400 cursor-pointer"
+                    />
+                  </div>
+
                   <MdDelete
                     size={28}
                     className="text-red-400 cursor-pointer"
@@ -107,11 +121,19 @@ const EventTable = () => {
             Create New Events
           </span>
         </div>
-      </div>{" "}
+      </div>
       <CreateEventModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-      />{" "}
+      />
+      {isEditOpen && (
+        <EditEvents
+          isOpen={isEditOpen}
+          onClose={() => setisEditOpen(false)}
+          eventData={selectedEvent}
+        />
+      )}
+
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -124,7 +146,7 @@ const EventTable = () => {
         pauseOnHover
         theme="colored"
         transition={Flip}
-      />{" "}
+      />
     </>
   );
 };

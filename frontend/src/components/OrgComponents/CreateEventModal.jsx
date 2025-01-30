@@ -117,7 +117,6 @@ const CreateEventModal = ({ isOpen, onClose }) => {
     <>
       <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center overflow-y-scroll h-full">
         <div className="mt-[100px] mb-8 bg-white rounded-lg shadow-lg w-[90%] md:w-[600px] p-6">
-          {" "}
           <div className="w-full flex justify-end cursor-pointer">
             <span onClick={onClose}>
               <IoMdClose size={24} />
@@ -167,7 +166,7 @@ const CreateEventModal = ({ isOpen, onClose }) => {
                   className="w-full border rounded-md p-2 outline-none"
                   placeholder="Enter event location"
                 />
-              </div>{" "}
+              </div>
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Required Volunteer
@@ -200,12 +199,11 @@ const CreateEventModal = ({ isOpen, onClose }) => {
                   accept="image/*"
                   onChange={handleFileChange}
                   required
-                />{" "}
+                />
                 <label
                   htmlFor="image"
                   className="mt-2 p-2 border border-gray-300 rounded-xl  w-[130px] bg-blue-500 text-white cursor-pointer flex justify-center"
                 >
-                  {" "}
                   Upload Image
                 </label>
               </div>
@@ -276,9 +274,9 @@ const CreateEventModal = ({ isOpen, onClose }) => {
                 Submit
               </button>
             </div>
-          </form>{" "}
+          </form>
         </div>
-      </div>{" "}
+      </div>
       <ToastContainer />
     </>
   );
