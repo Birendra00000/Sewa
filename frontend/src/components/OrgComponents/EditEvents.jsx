@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { AuthAPI } from "../../api";
+import axios from "axios";
 const EditEvents = ({ isOpen, onClose, eventData }) => {
   const [formData, setFormData] = useState({
-    title: eventData.eventTitle,
-    description: eventData.eventDescription,
-    location: eventData.eventLocation,
+    eventTitle: eventData.eventTitle,
+    eventDescription: eventData.eventDescription,
+    eventLocation: eventData.eventLocation,
     startDate: eventData.startDate,
     deadlineDate: eventData.deadlineDate,
     eventCapacity: eventData.eventCapacity,
     category: eventData.category,
   });
-  console.log("eventDataeventDataeventData", formData);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "startDate" || name === "deadlineDate") {
+      setFormData({ ...formData, [name]: new Date(value).toISOString() });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
+
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    if (e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
+
   const categories = [
     "Social Events",
     "Technology Workshop",
@@ -38,6 +48,66 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
     return `${year}-${month}-${day}`;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const authUser = JSON.parse(localStorage.getItem("AuthUser"));
+    let token = authUser?.token;
+
+    console.log("Retrieved Token:", token); // Check if token is correctly stored
+
+    // Decode the token
+
+    // Check if the decoded token is valid
+
+    // Prepare form data for submission
+    const formDataToSend = new FormData();
+    formDataToSend.append("eventTitle", formData.eventTitle);
+    formDataToSend.append("eventDescription", formData.eventDescription);
+    formDataToSend.append("eventCapacity", formData.eventCapacity);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("eventLocation", formData.eventLocation);
+    formDataToSend.append("startDate", formData.startDate);
+    formDataToSend.append("deadlineDate", formData.deadlineDate);
+
+    if (file && file instanceof File) {
+      formDataToSend.append("image", file);
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/event/${eventData._id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Updated fetched successfully");
+      // console.log("Event created successfully", response);
+      // notifySuccess();
+      // Handle success (e.g., clear form, close modal)
+    } catch (error) {
+      if (error.response) {
+        console.log("Response data:", error.response.data);
+        console.log("Status:", error.response.status);
+        console.log("Headers:", error.response.headers);
+      } else if (error.request) {
+        console.log("Request error, no response received:", error.request);
+      } else {
+        console.log("Error setting up the request:", error.message);
+      }
+
+      // Handle error appropriately
+    }
+  };
+
+  // console.log("handleSubmit", handleSubmit);
+
+  if (!isOpen) return null;
+
   return (
     <>
       <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center overflow-y-scroll h-full">
@@ -50,13 +120,13 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
           <h2 className="text-lg text-blue-500 font-semibold text-center mb-4">
             Edit New Event
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2 ">Title</label>
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="eventTitle"
+                value={formData.eventTitle}
                 onChange={handleChange}
                 required
                 className="w-full border rounded-md p-2 outline-none"
@@ -68,8 +138,8 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
                 Description
               </label>
               <textarea
-                name="description"
-                value={formData.description}
+                name="eventDescription"
+                value={formData.eventDescription}
                 onChange={handleChange}
                 required
                 className="w-full border rounded-md p-2 outline-none"
@@ -84,8 +154,8 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
                 </label>
                 <input
                   type="text"
-                  name="location"
-                  value={formData.location}
+                  name="eventLocation"
+                  value={formData.eventLocation}
                   onChange={handleChange}
                   required
                   className="w-full border rounded-md p-2 outline-none"
@@ -123,7 +193,6 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
                   className="hidden"
                   accept="image/*"
                   onChange={handleFileChange}
-                  required
                 />
                 <label
                   htmlFor="image"
