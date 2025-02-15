@@ -19,7 +19,7 @@ const EventTable = () => {
 
   const [events, setAllEvents] = useState([]);
 
-  const notify = () => toast.warn("Events deleted successfully");
+  const notify = () => toast.error("Events deleted successfully");
 
   const fetchUserEvents = async () => {
     try {
@@ -77,7 +77,7 @@ const EventTable = () => {
             events.map((event) => (
               <div
                 className="flex w-full justify-between mb-2 items-center text-black h-[100px] text-[14px]"
-                key={event.id}
+                key={event._id}
               >
                 <span className="w-[25%] text-center">{event.eventTitle}</span>
                 <span className="w-[15%] text-center">

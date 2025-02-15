@@ -3,6 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { AuthAPI } from "../../api";
 import axios from "axios";
 const EditEvents = ({ isOpen, onClose, eventData }) => {
+  console.log("evendataId", eventData._id);
   const [formData, setFormData] = useState({
     eventTitle: eventData.eventTitle,
     eventDescription: eventData.eventDescription,
@@ -52,6 +53,7 @@ const EditEvents = ({ isOpen, onClose, eventData }) => {
     e.preventDefault();
 
     const authUser = JSON.parse(localStorage.getItem("AuthUser"));
+    console.log("AuthUserrr", authUser);
     let token = authUser?.token;
 
     console.log("Retrieved Token:", token); // Check if token is correctly stored
